@@ -12,12 +12,12 @@ VRP属于网络优化问题，到VRP的本质就是序列决策问题，深度�
 
 常见问题的变形
 
-- ***CVRP：***Capacitated VRP, 限制配送车辆的承载体积、重量等。
-- ***VRPTW：***VRP with Time Windows, 客户对货物的送达时间有时间窗要求。
-- ***VRPPD：***VRP with Pickup and Delivery, 车辆在配送过程中可以一边揽收一边配送，在外卖O2O场景中比较常见。
-- ***MDVRP：*** Multi-Depot VRP, 配送网络中有多个仓库，同样的货物可以在多个仓库取货。
-- ***OVRP：***Open VRP, 车辆完成配送任务之后不需要返回仓库。
-- ***VRPB：*** VRP with backhauls, 车辆完成配送任务之后回程取货。
+- ***CVRP***Capacitated VRP, 限制配送车辆的承载体积、重量等。
+- ***VRPTW***VRP with Time Windows, 客户对货物的送达时间有时间窗要求。
+- ***VRPPD***VRP with Pickup and Delivery, 车辆在配送过程中可以一边揽收一边配送，在外卖O2O场景中比较常见。
+- ***MDVRP*** Multi-Depot VRP, 配送网络中有多个仓库，同样的货物可以在多个仓库取货。
+- ***OVRP***Open VRP, 车辆完成配送任务之后不需要返回仓库。
+- ***VRPB*** VRP with backhauls, 车辆完成配送任务之后回程取货。
 
 
 
