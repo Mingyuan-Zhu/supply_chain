@@ -63,7 +63,9 @@ Attention机制的出现，使得NLP的发展取得了重大突破， 例如tran
 
 “Attention is all you nedd”, 第一次提出了注意力转移机制， 带来了相应的NLP领域的革新。例如基于注意力转移机制的transformer 以及bert 模型，获得了远超过传统RNN以及LSTM的效果， 它引入一个上下文向量来表示解码上下文，使用具有带确定性贪心基准值(greedy rollout baseline)的深度强化学习算法对模型进行训练
 
-同时， pytroch-based 的易于实现，使得模型省去的大量的步骤在于指定n_head方面， 特别是与tensorflow1相比较而言。 这里给我我DT尝试过的transformer模型，来进行文本分析的实现。[https://github.com/Mingyuan-Zhu/supply_chain/blob/master/%E2%80%9C%E2%80%9C%E2%80%9Cpytorch_transorformer_test_glove_embdding300_Carl_ipynb%E2%80%9D%E2%80%9D%E7%9A%84%E5%89%AF%E6%9C%AC%20(1).ipynb](https://github.com/Mingyuan-Zhu/supply_chain/blob/master/"""pytorch_transorformer_test_glove_embdding300_Carl_ipynb""的副本 (1).ipynb)
+同时， pytroch-based 的易于实现，使得模型省去的大量的步骤在于指定n_head方面， 特别是与tensorflow1相比较而言。 这里给我我DT尝试过的transformer模型，来进行文本分析的实现。
+
+[Code_transformer](https://github.com/Mingyuan-Zhu/supply_chain/blob/master/%E2%80%9C%E2%80%9C%E2%80%9Cpytorch_transorformer_test_glove_embdding300_Carl_ipynb%E2%80%9D%E2%80%9D%E7%9A%84%E5%89%AF%E6%9C%AC%20(1).ipynb)
 
 
 
