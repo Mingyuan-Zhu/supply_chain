@@ -48,8 +48,55 @@ VRP属于网络优化问题，到VRP的本质就是序列决策问题，深度�
 
 ### Attention
 
-Attention机制的出现，使得NLP的发展取得了重大突破， 例如transformer 和bert model。
+Attention机制的出现，使得NLP的发展取得了重大突破， 例如transformer 和bert model。类比于生物领域脑科学来说，倾向于人因工程的全局扫描后，关注于model特定的部分- 更专注于数据重要的部分。
+
+![figure1 ](https://upload-images.jianshu.io/upload_images/13590053-1f06d6f5548bcf51.png?imageMogr2/auto-orient/strip|imageView2/2/w/746/format/webp)
+
+****
+
+****
 
 ***NLP*** 应用：
 
-“Attention is all you nedd”, 第一次提出了注意力转移机制
+“Attention is all you nedd”, 第一次提出了注意力转移机制， 带来了相应的NLP领域的革新。例如基于注意力转移机制的transformer 以及bert 模型，获得了远超过传统RNN以及LSTM的效果， 它引入一个上下文向量来表示解码上下文，使用具有带确定性贪心基准值(greedy rollout baseline)的深度强化学习算法对模型进行训练
+
+同时， pytroch-based 的易于实现，使得模型省去的大量的步骤在于指定n_head方面， 特别是与tensorflow1相比较而言。 这里给我我DT尝试过的transformer模型，来进行文本分析的实现。[https://github.com/Mingyuan-Zhu/supply_chain/blob/master/%E2%80%9C%E2%80%9C%E2%80%9Cpytorch_transorformer_test_glove_embdding300_Carl_ipynb%E2%80%9D%E2%80%9D%E7%9A%84%E5%89%AF%E6%9C%AC%20(1).ipynb](https://github.com/Mingyuan-Zhu/supply_chain/blob/master/"""pytorch_transorformer_test_glove_embdding300_Carl_ipynb""的副本 (1).ipynb)
+
+
+
+### **Attention, learn to solve routing problems**
+
+源码：
+
+*https://github.com/wouterkool/attention-learn-to-route*
+
+其他人求解CVRP的源码：
+
+*https://github.com/echofist/AM-VRP*
+
+从论文原文和实验结果均可以看出，这种完全端到端求解的深度强化学习方法相比LKH3启发式搜索方法最大的优势在于端到端神经网络的求解速度快(尤其在使用greedy策略时)；而相比同类型的完全端到端深度强化学习方法，本文使用的基于transformer的多头Attention模型具有更好地传递VRP中节点与节点之间信息的作用，它相比非多头注意力的embedding结合LSTM的RL模型具有提升求解质量的效果。
+
+
+
+结果而言， DNN 在求解acc以及speed方面远超过LKH3的启发式搜索。 并且基于Multi-head teenetion的transformer模型来说，结果是好于传统的信息传递效果，例如对其进行vector pre-trend embedding 的长短期记忆以及CNN,RNN等。这与在NLP领域的结果大致一致，纵使基于“No free lunch”， 大部分情况下都会取得更好的效果。预计在transformer embedding处理 后会取得更好的效果，使用与训练的embedding并进行固定，会节约大量的训练时间。
+
+实验代码基于pytorch框架~
+
+
+
+~![paper code](https://github.com/wouterkool/attention-learn-to-route/raw/master/images/tsp.gif)
+
+如图片所示， **VRP的目标是总成本最小的一组路径优化，每条路径中车辆从指定的仓库出发并最终回到仓库**，路径上的总需求不能超过车辆的承载能力。带容量限制的车辆路径规划问题(CVRP)则限定为，单辆特定容量限制的车辆负责，当车辆容量不足以满足任何客户点的需求时，必须返回仓库将货物装满。该问题的解决方案可以看作一组路径序列，每个路径序列的起点和终点都在车站，中间经过的都是客户节点。
+
+**求解VRP的算法可分为精确算法和启发式算法**。精确算法提供了最优的保证解，但由于计算复杂度高，无法处理大规模算例，而启发式算法往往速度快，但由于没有精确理论保证往往只能得到次优解。考虑到最优性和计算代价之间的权衡，启发式算法可以在大规模算例可接受的运行时间内找到次优解。
+
+
+
+这篇文章介绍的完全端到端的NN，自动地学习到隐含的启发式信息，尽可能地达到与启发式算法相近的效果。提出了一个基于注意力层的模型，该模型具有优于Pointer Network的优势，并且展示了如何进行训练.
+
+
+
+
+
+
+
