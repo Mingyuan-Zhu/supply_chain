@@ -1,4 +1,5 @@
 # Deep Reinforcement Learning for VRP
+
 ```
 车辆路径规划问题（Vehicle Routing Problem, VRP）是物流领域最经典的优化问题之一
 - 指一定数量的客户各自有不同数量的货物需求，配送中心向客户提供并输送货物，其行车路线在满足客户需求的前提下，需达到诸如路程最短、成本最小、耗时最少等目标。
@@ -6,6 +7,8 @@
 VRP属于网络优化问题，到VRP的本质就是序列决策问题，深度学习技术在VRP上最近也有很多应用
 
 ```
+
+![](https://github.com/wouterkool/attention-learn-to-route/raw/master/images/cvrp_0.png)
 
 常见问题的变形
 
@@ -90,13 +93,43 @@ Attention机制的出现，使得NLP的发展取得了重大突破， 例如tran
 
 **求解VRP的算法可分为精确算法和启发式算法**。精确算法提供了最优的保证解，但由于计算复杂度高，无法处理大规模算例，而启发式算法往往速度快，但由于没有精确理论保证往往只能得到次优解。考虑到最优性和计算代价之间的权衡，启发式算法可以在大规模算例可接受的运行时间内找到次优解。
 
-
-
-这篇文章介绍的完全端到端的NN，自动地学习到隐含的启发式信息，尽可能地达到与启发式算法相近的效果。提出了一个基于注意力层的模型，该模型具有优于Pointer Network的优势，并且展示了如何进行训练.
-
+原版transformer结构如下,Encoder含Multi-Head Attention layer，全连接层（Feed Forward）
 
 
 
+![](https://raw.githubusercontent.com/ldy8665/Material/master/image/Blog/Attention_transformer_architecture.png)
+
+这篇文章介绍的完全端到端的NN，自动地学习到隐含的启发式信息，尽可能地达到与启发式算法相近的效果，model结构类比于transformer然,修改了其结构，作为encoder和decoder。提出了一个基于注意力层的模型，该模型具有优于Pointer Network的优势，并且展示了如何进行训练.
+
+- 解决的问题:旅行商问题TSP（Travelling Salesman Problem）
+
+- Encoder： GraphAttentionEncoder（类名）
+
+  在解码器的每一步解码中，为得到综合当前已有信息的Context node embedding，首先将从编码器得到的图嵌入信息与每一步解码需要增加的信息嵌入,
+
+  对于TSP的求解，增加的信息为起点和当前点的embedding
+
+  
+
+  ![](https://raw.githubusercontent.com/ldy8665/Material/master/image/Blog/Attention_code_encoder.png)
+
+  `generate_vrp_data(dataset_size, vrp_size)`，意思是多少个实例s，每个s是多少个结点node
+
+  对一每一个问题实例s来说，s内包括n个结点（nodes，第i个结点的特征xi,对于TSP，是坐标，然后xi之间是全连通的。这一个实例s就可以当做一个图形（Graph）作为输入。
+
+  ![](https://raw.githubusercontent.com/ldy8665/Material/master/image/Blog/Attention_input.png)
+
+  ![](https://raw.githubusercontent.com/ldy8665/Material/master/image/Blog/Attention_generate_data3.png)
+
+  第一个元素是是结点坐标，第二个是每个结点的demand，第三个是车的capacity，这就是我们的输入了
+
+  
+
+- Decoder： AttentionModel（类名）
+
+  
+
+![](https://raw.githubusercontent.com/ldy8665/Material/master/image/Blog/Attention_decoder.png)
 
 
 
