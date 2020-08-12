@@ -74,6 +74,40 @@ Attention机制的出现，使得NLP的发展取得了重大突破， 例如tran
 [Code_transformer](https://github.com/Mingyuan-Zhu/supply_chain/blob/master/%E2%80%9C%E2%80%9C%E2%80%9Cpytorch_transorformer_test_glove_embdding300_Carl_ipynb%E2%80%9D%E2%80%9D%E7%9A%84%E5%89%AF%E6%9C%AC%20(1).ipynb)
 
 ```
+class JDclassification(nn.Module):
+    def __init__(self, vocab_size, embed_dim, num_classes, batch_size, device):
+        super(JDclassification,self).__init__()
+        ## define the components used to construct a nn network
+
+        self.embedding = nn.Embedding(vocab_size, embed_dim)
+
+        self.embedding.weight = nn.Parameter(torch.from_numpy(weights_matrix).float())
+
+        
+        self.batch_size=batch_size
+        self.num_encoder=2
+        self.num_head=16
+        self.max_length=500
+        self.dropout=0.5
+        self.hidden=100
+        self.encoder_layer = nn.TransformerEncoderLayer(d_model=300, nhead=10)
+        self.transformer_encoder = nn.TransformerEncoder(self.encoder_layer, num_layers=1)
+        self.fc_predict = nn.Linear(300, num_classes)
+
+#        self.init_weights()
+
+
+
+    def forward(self, text, mask, seq_length_idx):
+        ## construct the nn; define the data processing steps
+
+        batch_size=text.size()[0]
+        x =self.embedding(text)*mask[:,:,None] #[batch,seq,embed]
+        x=self.transformer_encoder(x)*mask[:,:,None]
+        x=x.permute(0,2,1)
+        x=F.relu(F.avg_pool1d(x,x.size(2)).squeeze(2))
+        x=self.fc_predict(x)
+        return x
 
 ```
 
